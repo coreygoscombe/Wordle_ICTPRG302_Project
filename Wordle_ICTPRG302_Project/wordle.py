@@ -24,6 +24,8 @@ scene = 0 # this decides what scene will be showing (e.g. gameplay, winning, los
 previous_guesses = []
 guess_greens = ["-","-","-","-","-"]
 guess_yellows = [] 
+# TODO: make a system for yellows thats better n shii
+# TODO part 2: add win and lose screens
 
 
 # Application Functions
