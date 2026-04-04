@@ -24,6 +24,7 @@ scene = 0 # this decides what scene will be showing (e.g. gameplay, winning, los
 previous_guesses = []
 guess_greens = ["-","-","-","-","-"]
 guess_yellows = [] 
+yellow_list = []
 # TODO: make a system for yellows thats better
 # TODO part 2: add win and lose screens
 
@@ -36,6 +37,7 @@ def eval_word():
     global allowed_guesses
     allowed_guesses -= 1
     split_guess = list(guess_word)
+    guess_yellows = []
     for letter in range(0,5):
         if split_guess[letter] == split_target[letter]:
             guess_greens[letter] = split_target[letter]
@@ -43,6 +45,7 @@ def eval_word():
             if split_guess[letter] not in guess_yellows:
                 guess_yellows.append(split_guess[letter])
     previous_guesses.append(''.join(split_guess))
+    yellow_list.append(''.join(guess_yellows))
 
 def readwords():
     global valid_words
@@ -71,6 +74,7 @@ def show_instructions():
     print("'Yellow' letters are letters that appear")
     print("in the correct word at any point")
     print("at any amount.")
+    print("You'll see it next to your guess labelled as 'Y'.")
     print("Good luck!")
     print("")
     print("Select a mode:")
@@ -87,17 +91,15 @@ def valid_word_check():
 
 def play_game():
     clear()
-    yellows = ''.join(guess_yellows)
     greens = ''.join(guess_greens)
     global previous_guesses
     global guess_word
     global allowed_guesses
     print("Previous guesses: ")
-    for guess in previous_guesses:
-        print(guess)
+    for guess in range(len(previous_guesses)):
+        print(previous_guesses[guess] + " | Y: " + yellow_list[guess])
     print(f"Guesses Left: {allowed_guesses}")
     print(f"Current word: {greens}")
-    print(f'Yellow: {yellows}')
     guess_word = input("Your Guess?: ")
     str(guess_word)
     guess_word = guess_word.upper()
