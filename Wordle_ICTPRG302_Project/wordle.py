@@ -124,11 +124,13 @@ def play_game():
     global allowed_guesses
     global target_word
     global greens
+    global score
     print("Previous guesses: ")
     for guess in range(len(previous_guesses)):
         print(previous_guesses[guess] + " | Y: " + yellow_list[guess])
     print(f"Guesses Left: {allowed_guesses}")
     print(f"Current word: {greens}")
+    print(f"Score: {score}")
     guess_word = input("Your Guess?: ")
     str(guess_word)
     guess_word = guess_word.upper()
