@@ -25,8 +25,7 @@ previous_guesses = []
 guess_greens = ["-","-","-","-","-"]
 guess_yellows = [] 
 yellow_list = []
-# TODO: make a system for yellows thats better
-# TODO part 2: add win and lose screens
+greens = ''
 
 
 # Application Functions
@@ -35,17 +34,28 @@ def eval_word():
     global guess_word
     global previous_guesses
     global allowed_guesses
+    global target_word
+    global greens
+    global scene
+    global score
     allowed_guesses -= 1
     split_guess = list(guess_word)
     guess_yellows = []
     for letter in range(0,5):
         if split_guess[letter] == split_target[letter]:
             guess_greens[letter] = split_target[letter]
+            score += 2
         elif split_guess[letter] in target_word:
             if split_guess[letter] not in guess_yellows:
                 guess_yellows.append(split_guess[letter])
+                score += 1
     previous_guesses.append(''.join(split_guess))
     yellow_list.append(''.join(guess_yellows))
+    greens = ''.join(guess_greens)
+    if allowed_guesses <= 0:
+        scene = 3
+    elif greens == target_word:
+        scene = 4
 
 def readwords():
     global valid_words
@@ -80,7 +90,25 @@ def show_instructions():
     print("Select a mode:")
     print("Normal: The regular Pydle Experience")
     print("Crazy: Any and all words allowed!")
-            
+
+def show_win():
+    global target_word
+    global score
+    clear()
+    print("Congratulations! you win!")
+    print("The word was: " + target_word)
+    print(f"Score: {score}")
+    sleep(4)
+
+def show_lose():
+    global target_word
+    global score
+    clear()
+    print("You lose! :(")
+    print("The word was: " + target_word)
+    print(f"Score: {score}")
+    sleep(4)
+     
 def valid_word_check():
     global valid_words
     global guess_word
@@ -91,10 +119,11 @@ def valid_word_check():
 
 def play_game():
     clear()
-    greens = ''.join(guess_greens)
     global previous_guesses
     global guess_word
     global allowed_guesses
+    global target_word
+    global greens
     print("Previous guesses: ")
     for guess in range(len(previous_guesses)):
         print(previous_guesses[guess] + " | Y: " + yellow_list[guess])
@@ -111,8 +140,9 @@ def play_game():
             eval_word()
 
 def test_game():
+    global target_word
     target_word = "GREEN"
-    DEBUG = False
+    play_game()
 
 readwords()
 while True:
@@ -144,5 +174,9 @@ while True:
             play_game()
     elif scene == 3:
         show_lose()
+        scene = 0
+        clear()
     elif scene == 4:
         show_win()
+        scene = 0
+        clear()
