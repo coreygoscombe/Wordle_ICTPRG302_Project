@@ -153,8 +153,8 @@ def display_score():
     print("Previous guesses: ")
     increment = 0
     for guess in range(len(previous_guesses)):
-        print(previous_guesses[guess])
         print(''.join(previous_scores[increment:increment+5]))
+        print(previous_guesses[guess])
         increment += 5
 
 def play_game():
