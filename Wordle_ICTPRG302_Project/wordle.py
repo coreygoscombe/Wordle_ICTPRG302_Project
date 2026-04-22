@@ -26,11 +26,12 @@ guess_greens = ["-","-","-","-","-"]
 guess_yellows = [] 
 yellow_list = []
 greens = ''
+name = ''
 
 
 # Application Functions
 
-def eval_word():
+def score_guess():
     global guess_word
     global previous_guesses
     global allowed_guesses
@@ -71,10 +72,11 @@ def readwords():
 
 
 def show_greeting():
-    print("Welcome To Pydle!")
-    sleep(2)
+    global name
+    name = input("Please enter your name: ")
+    print(f"Welcome To Pydle, {name}!")
 
-def show_instructions():
+def show_instructions(show_modes):
     global target_word
     global split_target
     print("Instructions")
@@ -86,10 +88,11 @@ def show_instructions():
     print("at any amount.")
     print("You'll see it next to your guess labelled as 'Y'.")
     print("Good luck!")
-    print("")
-    print("Select a mode:")
-    print("Normal: The regular Pydle Experience")
-    print("Crazy: Any and all words allowed!")
+    print("You can type 'help' at any time to view these.")
+    if show_modes == True:
+        print("Select a mode:")
+        print("Normal: The regular Pydle Experience")
+        print("Crazy: Any and all words allowed!")
 
 def show_win():
     global target_word
@@ -125,6 +128,8 @@ def play_game():
     global target_word
     global greens
     global score
+    global name
+    print(name)
     print("Previous guesses: ")
     for guess in range(len(previous_guesses)):
         print(previous_guesses[guess] + " | Y: " + yellow_list[guess])
@@ -132,18 +137,23 @@ def play_game():
     print(f"Current word: {greens}")
     print(f"Score: {score}")
     guess_word = input("Your Guess?: ")
-    str(guess_word)
-    guess_word = guess_word.upper()
-    if mode == "normal":
-        if valid_word_check() == True:
-            eval_word()
+    if guess_word.lower() == 'help':
+        clear()
+        show_instructions()
+        sleep(3)
     else:
-        if len(guess_word) == 5:
-            eval_word()
+        str(guess_word)
+        guess_word = guess_word.upper()
+        if mode == "normal":
+            if valid_word_check() == True:
+                score_guess()
+        else:
+            if len(guess_word) == 5:
+                score_guess()
 
 def test_game():
     global target_word
-    target_word = "GREEN"
+    target_word = "HORSE"
     play_game()
 
 readwords()
@@ -152,7 +162,7 @@ while True:
         show_greeting()
         scene = 1
     elif scene == 1:
-        show_instructions()
+        show_instructions(True)
         mode = input("Your selection: ")
         try:
             if mode.lower() == "normal":
