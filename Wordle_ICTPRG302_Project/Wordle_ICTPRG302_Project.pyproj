@@ -23,6 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="test.py" />
     <Compile Include="wordle.py" />
   </ItemGroup>
   <ItemGroup>
