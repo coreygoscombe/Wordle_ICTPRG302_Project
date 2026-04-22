@@ -1,4 +1,4 @@
-# ASSESSMENT_TITLE
+# Wordle_ICTPRG302_Project
 #
 # Author: Corey Goscombe
 # Student ID: 20155074
